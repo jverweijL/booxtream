@@ -1,0 +1,22 @@
+Bundle-Name: booxtream
+Bundle-SymbolicName: liferay.com.sample.booxtream
+Bundle-Version: 1.0.1
+
+Bundle-ClassPath:\
+  .,\
+  lib/commons-codec-1.11.jar,\
+  lib/commons-logging-1.2.jar,\
+  lib/httpclient-4.5.5.jar,\
+  lib/httpcore-4.4.9.jar,\
+  lib/httpmime-4.5.5.jar  
+  
+-includeresource:\
+  lib/commons-codec-1.11.jar=./lib/commons-codec-1.11.jar,\
+  lib/commons-logging-1.2.jar=./lib/commons-logging-1.2.jar,\
+  lib/httpclient-4.5.5.jar=./lib/httpclient-4.5.5.jar,\
+  lib/httpcore-4.4.9.jar=./lib/httpcore-4.4.9.jar,\
+  lib/httpmime-4.5.5.jar=./lib/httpmime-4.5.5.jar
+  
+Import-Package: !org.apache.avalon.framework.logger,\
+				!org.apache.log,\
+				*  

@@ -1,0 +1,23 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	compileOnly group: "org.osgi", name: "osgi.cmpn", version: "6.0.0"
+	
+	compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.5'
+	compile group: 'commons-codec', name: 'commons-codec', version: '1.11'
+    compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.9'
+    compile group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.5.5'
+}
+
+repositories { mavenCentral() }
+
+task copyToLib(type: Copy) {
+    into "$buildDir/libs"
+    from configurations.runtime
+}
+
+//project.configurations.compile.resolvedConfiguration.resolvedArtifacts.each {
+// println it.name // << the artifact name
+// println it.file // << the file reference
+//}
+
+build.dependsOn(copyToLib)
