@@ -53,9 +53,7 @@ public class BooXtream extends BaseModelListener<AssetEntry> {
 
 	@Override
 	public void onAfterCreate(AssetEntry model) throws ModelListenerException {
-		// TODO Auto-generated method stub
-		
-		System.out.println("New BooXtream is alive 85!");
+		System.out.println("New BooXtream is alive 83!");
 		
 		if (model.getClassName().equalsIgnoreCase(DLFileEntry.class.getName())) {
 			
@@ -65,10 +63,9 @@ public class BooXtream extends BaseModelListener<AssetEntry> {
 			List<AssetTag> tags = _assetTagService.getTags(model.getGroupId(), "booxtream", 0, 1);
 			if (tags.size() > 0 && model.getTags().contains(tags.get(0))) {
 				System.out.println("Uploading document to booxtream");
-				// get document and upload to booxtream
+				
 				try {
-					//DLFileEntry f = null;
-					//f = _dlFileEntryService.getFileEntry(model.getClassPK());
+					// get document and upload to booxtream
 					FileEntry f = null;
 					f = _dlAppService.getFileEntry(model.getClassPK());
 					
@@ -87,21 +84,7 @@ public class BooXtream extends BaseModelListener<AssetEntry> {
 												  createTempFile(result), 
 												  serviceContext);
 					
-					/*_dlFileEntryService.updateFileEntry(f.getFileEntryId(), 
-														f.getFileName(), 
-														f.getMimeType(), 
-														f.getTitle(), 
-														f.getDescription(),
-														"",
-														false,
-														f.getFileEntryTypeId(),
-														f.getDDMFormValuesMap(f.getFileVersion().getFileVersionId()),
-														createTempFile(result), 
-														null,
-														0,
-														serviceContext);*/
 				} catch (PortalException | IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}			
@@ -121,11 +104,6 @@ public class BooXtream extends BaseModelListener<AssetEntry> {
 		//https://service.booxtream.com/booxtream.epub
 		
 		 
-	    // get inputstream and store to temp file then pass file
-		
-
-		
-		
 		// http://www.baeldung.com/httpclient-multipart-upload
 		CredentialsProvider provider = new BasicCredentialsProvider();
 		UsernamePasswordCredentials credentials
@@ -136,12 +114,10 @@ public class BooXtream extends BaseModelListener<AssetEntry> {
         HttpEntity data = MultipartEntityBuilder.create()
                 .setMode(HttpMultipartMode.BROWSER_COMPATIBLE)              
                 .addBinaryBody("epubfile", createTempFile(input))
-                //.addBinaryBody("epubfile", new FileInputStream("/liferay/projects/booXtream/dracula.epub"), ContentType.create("application/epub+zip"), "dracula.epub")
                 .addTextBody("referenceid", "987654321")
                 .addTextBody("languagecode", "1033")
                 .addTextBody("disclaimer", "1")
                 .addTextBody("customername", "ACME Corp.")
-                //.addTextBody("text", message, ContentType.DEFAULT_BINARY)
                 .build();
 		  
 		HttpClient client = HttpClientBuilder.create()
@@ -161,13 +137,9 @@ public class BooXtream extends BaseModelListener<AssetEntry> {
 	}
 	
 	private File createTempFile(InputStream input) throws IOException {
-		File tmpDir = new File("/tmp");
-		File tempFile = File.createTempFile("booxtream", ".epub",tmpDir);
+		File tempFile = File.createTempFile("booxtream", ".epub");
+		tempFile.deleteOnExit();
 
-	    // Delete temp file when program exits.
-	    //tempFile.deleteOnExit();
-	    
-	 // write the inputStream to a FileOutputStream
 	    OutputStream outputStream = null;
 	 	outputStream = new FileOutputStream(tempFile);
 
@@ -186,9 +158,6 @@ public class BooXtream extends BaseModelListener<AssetEntry> {
 	
 	@Reference(cardinality=ReferenceCardinality.MANDATORY)
 	protected AssetTagService _assetTagService;
-	
-	//@Reference(cardinality=ReferenceCardinality.MANDATORY)
-	//protected DLFileEntryService _dlFileEntryService;
 	
 	@Reference(cardinality=ReferenceCardinality.MANDATORY)
 	protected DLAppService _dlAppService;
